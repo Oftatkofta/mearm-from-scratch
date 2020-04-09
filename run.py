@@ -21,7 +21,7 @@ for pin in pins:
 base = GPIO.PWM(basePin, 50)
 left = GPIO.PWM(leftPin, 50)
 right = GPIO.PWM(rightPin, 50)
-grip = GPIO.PWM(griPin, 50)
+grip = GPIO.PWM(gripPin, 50)
 
 def readA0():
     bus.write_byte(address, 0x40)
