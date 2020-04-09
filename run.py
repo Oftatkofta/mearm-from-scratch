@@ -10,5 +10,6 @@ def readA0():
     return bus.read_byte(address, 0x40)
 
 if __name__ == "__main__":
-    print(readA0())
+    while True:
+        print(readA0())
     
