@@ -4,8 +4,8 @@ import time
 
 address = 0x48
 bus = smbus.SMBus(1)
-level = 0.5
-increment = 0.1
+level = 0
+increment = 10
 
 GPIO.setmode(GPIO.BCM)
 
@@ -59,9 +59,10 @@ if __name__ == "__main__":
     try:
         while True:
             
-            if (level > 1.0) or (level < 0):
+            if (level > 100) or (level < 0):
             
                 increment = increment * -1
+                level += increment
             
             level += increment
             
