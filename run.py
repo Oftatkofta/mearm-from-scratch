@@ -58,13 +58,14 @@ def readA3():
 if __name__ == "__main__":
     try:
         while True:
-            
+        
+            level += increment
             if (level > 100) or (level < 0):
             
                 increment = increment * -1
                 level += increment
             
-            level += increment
+            
             
             print(readA0(), readA1(), readA2(), readA3(), level)
             for servo in servos:
