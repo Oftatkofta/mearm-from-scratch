@@ -4,8 +4,8 @@ import time
 
 address = 0x48
 bus = smbus.SMBus(1)
-level = 2.5
-increment = 0.5
+level = 0.5
+increment = 0.1
 
 GPIO.setmode(GPIO.BCM)
 
@@ -59,11 +59,11 @@ if __name__ == "__main__":
     try:
         while True:
             
-            if (level >= 5.0):
+            if (level > 1.0) or (level < 0):
             
                 increment = increment * -1
             
-            level += 0.1
+            level += increment
             
             print(readA0(), readA1(), readA2(), readA3(), level)
             for servo in servos:
