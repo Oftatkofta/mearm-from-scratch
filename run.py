@@ -4,7 +4,8 @@ import time
 
 address = 0x48
 bus = smbus.SMBus(1)
-out = []
+level = 2.5
+increment = 0.1
 
 GPIO.setmode(GPIO.BCM)
 
@@ -22,6 +23,12 @@ base = GPIO.PWM(basePin, 50)
 left = GPIO.PWM(leftPin, 50)
 right = GPIO.PWM(rightPin, 50)
 grip = GPIO.PWM(gripPin, 50)
+
+servos = [base, left, right, grip]
+
+for servo in servos:
+    servo.start(level)
+
 
 def readA0():
     bus.write_byte(address, 0x40)
@@ -51,7 +58,16 @@ def readA3():
 if __name__ == "__main__":
     try:
         while True:
-            print(readA0(), readA1(), readA2(), readA3())
+            
+            if (level > 10) or (level < 0):
+                increment = increment * -1
+            level += 0.1
+            
+            print(readA0(), readA1(), readA2(), readA3(), level)
+            for servo in servos:
+                servo.ChangeDutyCycle(level)
+            
+            time.sleep(0.5)
     
     except (KeyboardInterrupt, SystemExit):
         base.stop()
