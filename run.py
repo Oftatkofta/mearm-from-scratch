@@ -5,7 +5,7 @@ import time
 address = 0x48
 bus = smbus.SMBus(1)
 level = 2.5
-increment = 0.1
+increment = 0.5
 
 GPIO.setmode(GPIO.BCM)
 
@@ -59,8 +59,10 @@ if __name__ == "__main__":
     try:
         while True:
             
-            if (level > 10) or (level < 0):
+            if (level >= 5.0):
+            
                 increment = increment * -1
+            
             level += 0.1
             
             print(readA0(), readA1(), readA2(), readA3(), level)
