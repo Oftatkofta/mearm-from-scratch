@@ -47,11 +47,15 @@ def readA3():
     
     return bus.read_byte(address)
 
-except KeyboardInterrupt:
-  p.stop()
-  GPIO.cleanup()
 
 if __name__ == "__main__":
-    while True:
-        print(readA0(), readA1(), readA2(), readA3())
+    try:
+        while True:
+            print(readA0(), readA1(), readA2(), readA3())
     
+    except (KeyboardInterrupt, SystemExit):
+        base.stop()
+        left.stop()
+        right.stop()
+        grip.stop()
+        GPIO.cleanup()
