@@ -32,7 +32,7 @@ for servo in servos:
 
 def scale(read, maxval):
     
-    return (read/255)*maxval
+    return (read/255.0)*maxval
 
 
 def readA0():
