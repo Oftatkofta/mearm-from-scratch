@@ -28,7 +28,7 @@ grip = GPIO.PWM(gripPin, PWMfreq)
 servos = [base, left, right, grip]
 
 for servo in servos:
-    servo.start(level/2)
+    servo.start(level)
 
 def scale(read, maxval):
     
@@ -73,7 +73,7 @@ if __name__ == "__main__":
             
             
             print(readA0(), readA1(), readA2(), readA3(), level)
-            
+            print(scale(readA0(), level), scale(readA1(), level), scale(readA2(), level), scale(readA3(), level))
             base.ChangeDutyCycle(scale(readA0(), level))
             left.ChangeDutyCycle(scale(readA1(), level))
             right.ChangeDutyCycle(scale(readA2(), level))
