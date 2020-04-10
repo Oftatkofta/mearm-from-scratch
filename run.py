@@ -4,7 +4,7 @@ import time
 
 address = 0x48
 bus = smbus.SMBus(1)
-level = 0
+level = 10
 increment = 10
 PWMfreq = 60
 
