@@ -4,7 +4,7 @@ import time
 
 address = 0x48
 bus = smbus.SMBus(1)
-level = 10
+level = 100
 increment = 10
 PWMfreq = 60
 
@@ -28,7 +28,7 @@ grip = GPIO.PWM(gripPin, PWMfreq)
 servos = [base, left, right, grip]
 
 for servo in servos:
-    servo.start(level)
+    servo.start(level/2)
 
 def scale(read, maxval):
     
