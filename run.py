@@ -6,6 +6,7 @@ address = 0x48
 bus = smbus.SMBus(1)
 level = 0
 increment = 10
+PWMfreq = 60
 
 GPIO.setmode(GPIO.BCM)
 
@@ -19,15 +20,19 @@ pins = [basePin, leftPin, rightPin, gripPin]
 for pin in pins:
     GPIO.setup(pin,GPIO.OUT)
     
-base = GPIO.PWM(basePin, 50)
-left = GPIO.PWM(leftPin, 50)
-right = GPIO.PWM(rightPin, 50)
-grip = GPIO.PWM(gripPin, 50)
+base = GPIO.PWM(basePin, PWMfreq)
+left = GPIO.PWM(leftPin, PWMfreq)
+right = GPIO.PWM(rightPin, PWMfreq)
+grip = GPIO.PWM(gripPin, PWMfreq)
 
 servos = [base, left, right, grip]
 
 for servo in servos:
     servo.start(level)
+
+def scale(read, maxval):
+    
+    return (read/255)*maxval
 
 
 def readA0():
@@ -59,19 +64,22 @@ if __name__ == "__main__":
     try:
         while True:
         
-            level += increment
-            if (level > 100) or (level < 0):
+            #level += increment
+            #if (level > 100) or (level < 0):
             
-                increment = increment * -1
-                level += increment
+             #   increment = increment * -1
+             #   level += increment
             
             
             
             print(readA0(), readA1(), readA2(), readA3(), level)
-            for servo in servos:
-                servo.ChangeDutyCycle(level)
             
-            time.sleep(0.5)
+            base.ChangeDutyCycle(scale(readA0(), level))
+            left.ChangeDutyCycle(scale(readA1(), level))
+            right.ChangeDutyCycle(scale(readA2(), level))
+            grip.ChangeDutyCycle(scale(readA3(), level))
+            
+            time.sleep(0.2)
     
     except (KeyboardInterrupt, SystemExit):
         base.stop()
